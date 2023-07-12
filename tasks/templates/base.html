@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Django To do App</title>
+    </head>
+
+    <body>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/tasks">Tasks</a>
+                </li>
+
+                {% if not user.is_authenticated %}
+                    <li>
+                        <a href="/singup">Singu Up</a>
+                    </li>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                    <li>
+                        <a href="/logout">Log out</a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+
+        {% block content %}
+
+        {% endblock %}
+
+    </body>
+
+</html>

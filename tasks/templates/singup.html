@@ -1,9 +1,13 @@
-<h1>Sing Up</h1>
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Sing Up</h1>
 
-{{ error }}
+    {{ error }}
 
-<form action="/singup/" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button>Sinug Up</button>
-</form>
+    <form action="/singup/" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button>Sinug Up</button>
+    </form>
+
+{% endblock %}
