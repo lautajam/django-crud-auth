@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
+from .forms import TaskForm
 
 # Shows the home page
 def home(request):
@@ -33,16 +34,12 @@ def singup(request):
                 'error': 'Password do not match'
             })
 
-
-def tasks(request):
-    return render(request, 'tasks.html')
-
 # Close session
 def singout(request):
     logout(request)
     return redirect('home')
 
-
+# Login the usser
 def singin(request):
     if request.method == 'GET':
         return render(request, 'singin.html', {
@@ -58,3 +55,26 @@ def singin(request):
         else:
             login(request, user)
             return redirect('tasks')
+
+# Show user tasks
+def tasks(request):
+    return render(request, 'tasks.html')
+
+#The user can create tasks
+def create_task(request):
+    if request.method == "GET":
+        return render(request, 'create_task.html', {
+            'form': TaskForm
+        })
+    else:
+        try:
+            form = TaskForm(request.POST)
+            new_task = form.save(commit=False)
+            new_task.user = request.user
+            new_task.save() 
+            return redirect('tasks')
+        except ValueError:
+            return render(request, 'create_task.html', {
+            'form': TaskForm,
+            'error': "Please provide valid data "
+        })
