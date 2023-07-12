@@ -19,13 +19,16 @@
 
                 {% if not user.is_authenticated %}
                     <li>
-                        <a href="/singup">Singu Up</a>
+                        <a href="/singup">Sing Up</a>
+                    </li>
+                    <li>
+                        <a href="/singin">Login</a>
                     </li>
                 {% endif %}
 
                 {% if user.is_authenticated %}
                     <li>
-                        <a href="/logout">Log out</a>
+                        <a href="/logout">Logout</a>
                     </li>
                 {% endif %}
 
