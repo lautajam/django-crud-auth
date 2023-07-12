@@ -30,12 +30,21 @@
                     <li>
                         <a href="/tasks/create/">Create Task</a>
                     </li>
+                    {% if user.is_superuser %}
+                        <li>
+                            <a href="/admin">Admin</a>
+                        </li>
+                    {% endif %}
                     <li>
                         <a href="/logout">Logout</a>
                     </li>
                 {% endif %}
-
             </ul>
+            {% if user.is_authenticated %}
+                <h3>
+                    User: {{ user }}
+                </h3>
+            {% endif %}
         </nav>
 
         {% block content %}
