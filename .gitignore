@@ -6,3 +6,6 @@ __pycache__
 
 # Ignore virtualenv directory
 venv/ 
+
+# Ignore .gitignore files
+.gitignore
