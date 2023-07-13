@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db import IntegrityError
+from django.utils import timezone
 from .forms import TaskForm
 from .models import Task
 
@@ -10,10 +11,10 @@ from .models import Task
 def home(request):
     return render(request, 'home.html')
 
-# Create the user and check if it already exists
-def singup(request):
+# Create the user and check if it already exists **
+def signup(request):
     if request.method == "GET":
-        return render(request, 'singup.html', {
+        return render(request, 'signup.html', {
             'form': UserCreationForm
         })
     else:
@@ -25,31 +26,31 @@ def singup(request):
                 login(request, user)
                 return redirect('tasks')
             except IntegrityError:
-                return render(request, 'singup.html', {
+                return render(request, 'signup.html', {
                     'form': UserCreationForm,
                     'error': 'User already exist'
                 })
         else:
-            return render(request, 'singup.html', {
+            return render(request, 'signup.html', {
                 'form': UserCreationForm,
                 'error': 'Password do not match'
             })
 
 # Close session
-def singout(request):
+def signout(request):
     logout(request)
     return redirect('home')
 
-# Login the usser
-def singin(request):
+# Login the usser **
+def signin(request):
     if request.method == 'GET':
-        return render(request, 'singin.html', {
+        return render(request, 'signin.html', {
             'form': AuthenticationForm
         })
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'singin.html', {
+            return render(request, 'signin.html', {
                 'form': AuthenticationForm,
                 'error': "Username or password is incorrect"
             })
@@ -57,14 +58,14 @@ def singin(request):
             login(request, user)
             return redirect('tasks')
 
-# Show user tasks
+# Show user tasks *
 def tasks(request):
     tasks = Task.objects.filter(user=request.user, date_completed__isnull=True)
     return render(request, 'tasks.html', {
         'tasks': tasks
     })
 
-#The user can create tasks
+#The user can create tasks **
 def create_task(request):
     if request.method == "GET":
         return render(request, 'create_task.html', {
@@ -83,8 +84,29 @@ def create_task(request):
             'error': "Please provide valid data "
         })
 
+# write comment **
 def task_detail(request,task_id):
-    task = get_object_or_404(Task, pk=task_id)
-    return render(request, 'task_detail.html', {
-        'task': task
-    })
+    if request.method == "GET":
+        task = get_object_or_404(Task, pk=task_id, user=request.user)
+        form = TaskForm(instance=task)
+        return render(request, 'task_detail.html', {
+            'form': form
+        })
+    else:
+        try:
+            task = get_object_or_404(Task, pk=task_id, user=request.user)
+            form = TaskForm(request.POST, instance=task)
+            form.save() 
+            return redirect('tasks')
+        except ValueError:
+            return render(request, 'task_detail.html', {
+            'form': TaskForm,
+            'error': "Error updating task"
+        })
+
+def complete_task(request, task_id):
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == 'POST':
+        task.date_completed = timezone.now() 
+        task.save()
+        return redirect('tasks')

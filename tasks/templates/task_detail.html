@@ -1,8 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>{{ task.title }}</h1>
-    <p>Description: {{ task.description }}</p>
-    <p>Date crated: {{ task.date_created }}</p>
-    <p>Date completed: {{ task.date_completed }}</p>
-    <p>Importat: {{ task.important }}</p>
+
+    {{ error }}
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button>
+            Update
+        </button>
+    </form>
+
+    <form action="{% url 'complete_task' task.id %}" method="POST">
+        {% csrf_token %}
+        <button>
+          complete
+        </button>
+      </form>
+
 {% endblock %}
