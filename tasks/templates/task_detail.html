@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>{{ task.title }}</h1>
-
     {{ error }}
 
     <form method="POST">
@@ -15,10 +14,17 @@
         </button>
     </form>
 
-    <form action="{% url 'complete_task' task.id %}" method="POST">
+    <form action="{% url 'complete_task' task_id %}" method="POST">
         {% csrf_token %}
         <button>
-          complete
+          Complete
+        </button>
+      </form>
+
+      <form action="{% url 'delete_task' task_id %}" method="POST">
+        {% csrf_token %}
+        <button>
+          Delete
         </button>
       </form>
 

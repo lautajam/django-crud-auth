@@ -90,7 +90,8 @@ def task_detail(request,task_id):
         task = get_object_or_404(Task, pk=task_id, user=request.user)
         form = TaskForm(instance=task)
         return render(request, 'task_detail.html', {
-            'form': form
+            'form': form,
+            'task_id': task_id
         })
     else:
         try:
@@ -109,4 +110,10 @@ def complete_task(request, task_id):
     if request.method == 'POST':
         task.date_completed = timezone.now() 
         task.save()
+        return redirect('tasks')
+
+def delete_task(request, task_id):
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == 'POST':
+        task.delete()
         return redirect('tasks')
