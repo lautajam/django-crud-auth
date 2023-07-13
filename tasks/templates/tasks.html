@@ -1,22 +1,41 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Tasks</h1> 
-
-    <ul>
+<main class="container p-5 col-md-6">
+    <section class="card card-body background_2">
+        {% if title_parameter is False %}
+            <h1 class="display-3 text-center">Tasks Completed</h1>
+            <hr>
+        {% else %}
+            <h1 class="display-3 text-center">Tasks Pending</h1>
+            <hr>
+        {% endif %}
         {% for task in tasks %}
-        <li>
-            {% if task.important == True %}
-                <strong> {{ task.title }} </strong>
-            {% else %}
-                <p>{{ task.title }}</p>
-            {% endif %}
-            <p> Description: {{ task.description }} </p>
-            <p>Completed: {{ task.date_completed|date:'M j Y:i' }}</p>
-            <a href="{% url 'task_detail' task.id %}">
-                View details
-            </a>
-        </li>
-        <br>
+            <div class="card text-center my-3">
+                <div class="card-header">
+                    <h3> {{ task.title }} </h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-text fs-4"> Description: {{ task.description }} </p>
+                    <p class="card-text fs-5">Created: {{ task.date_created|date:'j M Y' }}</p>
+                    {% if task.date_completed is not null %}
+                        <p class="card-text fs-5">Completed: {{ task.date_completed|date:'j M Y' }}</p>
+                    {% else %}
+                        <a href="{% url 'task_detail' task.id %}" class="btn btn-primary">
+                            View details
+                        </a>
+                    {% endif %}
+                </div>
+                {% if task.important == True %}
+                    <div class="card-footer text-body-secondary">
+                        <strong> Important </strong>
+                    </div>
+                {% else %}
+                    <div class="card-footer text-body-secondary">
+                        <span> No important </span>
+                    </div>
+                {% endif %}
+            </div>
         {% endfor %}
-    </ul>
+    </section>
+</main>
 {% endblock %}

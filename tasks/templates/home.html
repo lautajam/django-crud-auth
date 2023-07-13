@@ -2,17 +2,28 @@
 {% block content %}
     <main class="container py-5">
         <section class="card card-body background_2">
-            <h1 class="display-3 text-center">TdoDo App</h1>
+            <h1 class="display-3 text-center">ToDo App</h1>
             <hr>
             <p>The application I have developed is an "Todo App" created using Django, a Python web development framework. This app is designed to help you organize and manage your daily tasks efficiently. With this app, you can create, update and delete tasks, as well as mark them as completed. It also offers additional features such as  he ability to set deadlines, add notes or comments to tasks, and filter them by different categories or tags. </p>
 
             <p>In addition to the basic functionalities of a "ToDo App", this application uses advanced Django features, such as the user authentication system to allow registration and login, and permissions management to restrict access to certain functionalities to authenticated users only.
                 
             <p>With this app developed with Django, you can effectively keep track of your daily tasks, improve your productivity and keep your personal or professional life organized.</p>
-        <div class="text-center">
-            <a href="/signup" class="btn btn-dark text-light" >SignUp</a>
-            <a href="/signin" class="btn btn-dark text-light">Login</a>
-        </div>
+            {% if user.is_authenticated%}
+                <div class="text-center">
+                    <a href="/tasks" class="btn btn-dark text-light" >Tasks pending</a>
+                    <a href="/tasks/create" class="btn btn-dark text-light mx-5 my-2">Create task</a>
+                    <a href="/tasks_completed" class="btn btn-dark text-light">Task completed</a>
+                    {% if user.is_superuser %}
+                        <a href="/admin" class="btn btn-dark text-light mx-5 my-2">Admin</a>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div class="text-center">
+                    <a href="/signup" class="btn btn-dark text-light" >SignUp</a>
+                    <a href="/signin" class="btn btn-dark text-light mx-5 my-2">Login</a>
+                </div>
+            {% endif %}
         </section>
     </main>
 {% endblock %}

@@ -112,10 +112,11 @@ def task_detail(request,task_id):
     # In case of errors, it displays an error message in the template 'task_detail.html'.
     if request.method == "GET":
         task = get_object_or_404(Task, pk=task_id, user=request.user)
-        form = TaskForm(instance=task)
         return render(request, 'task_detail.html', {
-            'form': form,
-            'task_id': task_id
+            'task_id': task_id,
+            'task_title': task.title,
+            'task_description': task.description,
+            'task_important': task.important,
         })
     else:
         try:
@@ -156,6 +157,9 @@ def tasks_completed(request):
     # Retrieves the current user's completed tasks sorted by date of completion in descending order.
     # Renders the 'tasks.html' template with the retrieved tasks
     tasks = Task.objects.filter(user=request.user, date_completed__isnull=False).order_by('-date_completed')
+    title_parameter = False
     return render(request, 'tasks.html', {
-        'tasks': tasks
+        'tasks': tasks,
+        'title_parameter': title_parameter,
+
     })
