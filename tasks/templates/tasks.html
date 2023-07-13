@@ -5,17 +5,20 @@
     <ul>
         {% for task in tasks %}
         <li>
-            <div>
-                <strong> {{ task.title }} </strong>
-                <p> Description: {{ task.description }} </p>
-                <span> Importance: </span>
-                {% if task.important == True %}
-                    <span> Important </span>
-                {% else %}
-                    <span> No important </span>
-                {% endif %}
-            </div>
+            <strong> {{ task.title }} </strong>
+            <p> Description: {{ task.description }} </p>
+            <span> Importance: </span>
+            {% if task.important == True %}
+                <span> Important </span>
+            {% else %}
+                <span> No important </span>
+            {% endif %}
+            <br>
+            <a href="{% url 'task_detail' task.id %}">
+                View details
+            </a>
         </li>
+        <br>
         {% endfor %}
     </ul>
 {% endblock %}
