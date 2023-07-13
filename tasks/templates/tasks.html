@@ -5,15 +5,13 @@
     <ul>
         {% for task in tasks %}
         <li>
-            <strong> {{ task.title }} </strong>
-            <p> Description: {{ task.description }} </p>
-            <span> Importance: </span>
             {% if task.important == True %}
-                <span> Important </span>
+                <strong> {{ task.title }} </strong>
             {% else %}
-                <span> No important </span>
+                <p>{{ task.title }}</p>
             {% endif %}
-            <br>
+            <p> Description: {{ task.description }} </p>
+            <p>Completed: {{ task.date_completed|date:'M j Y:i' }}</p>
             <a href="{% url 'task_detail' task.id %}">
                 View details
             </a>
