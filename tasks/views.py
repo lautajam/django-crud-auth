@@ -22,23 +22,29 @@ def signup(request):
             'form': UserCreationForm
         })
     else:
-        if request.POST['password1'] == request.POST['password2']:
-            try:
-                user = User.objects.create_user(
-                    username=request.POST['username'], password=request.POST['password1'])
-                user.save()
-                login(request, user)
-                return redirect('tasks')
-            except IntegrityError:
+        try:
+            if request.POST['password1'] == request.POST['password2']:
+                try:
+                    user = User.objects.create_user(
+                        username=request.POST['username'], password=request.POST['password1'])
+                    user.save()
+                    login(request, user)
+                    return redirect('tasks')
+                except IntegrityError:
+                    return render(request, 'signup.html', {
+                        'form': UserCreationForm,
+                        'error': 'User already exist'
+                    })
+            else:
                 return render(request, 'signup.html', {
                     'form': UserCreationForm,
-                    'error': 'User already exist'
+                    'error': 'Password do not match'
                 })
-        else:
+        except ValueError:
             return render(request, 'signup.html', {
-                'form': UserCreationForm,
-                'error': 'Password do not match'
-            })
+                        'form': UserCreationForm,
+                        'error': 'Complete data'
+                    })
 
 # Close session
 @login_required

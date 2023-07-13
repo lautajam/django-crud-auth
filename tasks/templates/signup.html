@@ -1,12 +1,36 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>sign Up</h1>
+<main class="container py-5 text-center">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <form action="/signup/" method="POST" class="card card-body text-center background_2">
+                <h1>Sign Up</h1>
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
 
-    {{ error }}
+                <hr>
 
-    <form action="/signup/" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button>Sinug Up</button>
-    </form>
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="id_username" class="form-label">User</label>
+                    <input type="text" name="username" id="id_username" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_password1" class="form-label">Password</label>
+                    <input type="password" name="password1" id="id_password1" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_password1" class="form-label">Password confirmation</label>
+                    <input type="password" name="password2" id="password1" class="form-control">
+                </div>
+                <button class="btn btn-dark" type="submit">Sign Up</button>
+            </form>
+        </div>
+</main>
 {% endblock %}

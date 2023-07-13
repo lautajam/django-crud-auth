@@ -1,5 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Home</h1>
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae harum, at nisi quas culpa autem voluptate beatae quos nemo distinctio iste sequi necessitatibus explicabo quod reiciendis recusandae consequuntur odio doloremque?</p>
+    <main class="container py-5">
+        <section class="card card-body background_2">
+            <h1 class="display-3 text-center">TdoDo App</h1>
+            <hr>
+            <p>The application I have developed is an "Todo App" created using Django, a Python web development framework. This app is designed to help you organize and manage your daily tasks efficiently. With this app, you can create, update and delete tasks, as well as mark them as completed. It also offers additional features such as  he ability to set deadlines, add notes or comments to tasks, and filter them by different categories or tags. </p>
+
+            <p>In addition to the basic functionalities of a "ToDo App", this application uses advanced Django features, such as the user authentication system to allow registration and login, and permissions management to restrict access to certain functionalities to authenticated users only.
+                
+            <p>With this app developed with Django, you can effectively keep track of your daily tasks, improve your productivity and keep your personal or professional life organized.</p>
+        <div class="text-center">
+            <a href="/signup" class="btn btn-dark text-light" >SignUp</a>
+            <a href="/signin" class="btn btn-dark text-light">Login</a>
+        </div>
+        </section>
+    </main>
 {% endblock %}
