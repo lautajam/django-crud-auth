@@ -21,7 +21,3 @@ This "ToDo App" uses advanced Django features to enhance user experience and sec
 - **User Authentication**: Implementing a user authentication system allows users to securely register, log in and manage their tasks.
 
 - **Permission management**: Certain functionalities, such as creating and editing tasks, are restricted to authenticated users only.
-
-## Stay organized and boost productivity
-
-With the "ToDo App" developed using Django, you can streamline your task management process, increase productivity and keep your personal or professional life organized. Whether you need to tackle daily tasks, work projects, or personal goals, this app provides the tools you need to stay on top of your tasks at the same time.
